@@ -57,7 +57,7 @@ app.use(express.json());
 
 
 app.use(cors({
-  origin: 'https://studentsponsorship-web.onrender.com/', // Replace with your ACTUAL Render frontend URL
+  origin: 'https://studentsponsorship-web.onrender.com', // Replace with your ACTUAL Render frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 }));
