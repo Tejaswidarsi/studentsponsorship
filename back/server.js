@@ -54,6 +54,13 @@ try {
 // Middleware
 app.use(cors());
 app.use(express.json());
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'https://studentsponsorship-web.onrender.com/', // Replace with your ACTUAL Render frontend URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use('/api/students', studentRoutes);
 app.use('/api/accounts', accountRoutes);
 app.use('/api/admin', adminRoutes);

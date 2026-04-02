@@ -1,4 +1,4 @@
-import API from './api';
+import API from '../api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './studentdashboard.css'; // make sure this CSS file exists
