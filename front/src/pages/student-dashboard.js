@@ -11,7 +11,7 @@ const StudentDashboard = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await API.get(`/students/status/${encodeURIComponent(email)}`);
+      const res = await API.get(`/students/status?email=${email}`);
       setRequests(res.data);
     } catch (err) {
       setRequests([]);
