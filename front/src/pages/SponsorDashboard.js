@@ -9,9 +9,13 @@ function SponsorDashboard() {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const razorpayid = "rzp_test_S1dfMgxP3oaO8y";
   // Fetch student data
+  const API_BASE_URL = "https://studentsponsorship-backend.onrender.com/api/sponsor";
+  const UPLOAD_BASE_URL = "https://studentsponsorship-backend.onrender.com/uploads";
+// Example call:
+  
   const fetchStudents = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/sponsor/students');
+      const res = await axios.get(`${API_BASE_URL}/students`);
       setStudents(res.data);
     } catch (err) {
       console.error('Error fetching students:', err);
@@ -59,7 +63,7 @@ function SponsorDashboard() {
 
     try {
       const response = await axios.post(
-  'http://localhost:5000/api/sponsor/create-order',
+  `${API_BASE_URL}/create-order`,
   { amount }
 );
 console.log("Backend Response:", response.data);
@@ -97,7 +101,7 @@ const razorpay_amount = response.data.amount;
 
   try {
     await axios.post(
-      "http://localhost:5000/api/sponsor/payment-success",
+      `${API_BASE_URL}/payment-success`,
       dataToSend
     );
 
@@ -138,7 +142,7 @@ const razorpay_amount = response.data.amount;
             <div key={student._id} className="student-profile-card">
               <div className="student-profile-content">
                 <img
-                  src={`http://localhost:5000/uploads/${student.photoUrl}`}
+                  src={`${UPLOAD_BASE_URL}/${student.photoUrl}`}
                   alt={`${student.name}`}
                   className="student-profile-image"
                   onError={(e) => {
@@ -157,7 +161,7 @@ const razorpay_amount = response.data.amount;
                       onContextMenu={(e) => e.preventDefault()}
                       style={{ maxWidth: '100%', marginTop: '5px' }}
                     >
-                      <source src={`http://localhost:5000/uploads/${student.videoUrl}`} type="video/mp4" />
+                      <source src={`${UPLOAD_BASE_URL}/${student.photoUrl}`} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>

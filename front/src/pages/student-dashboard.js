@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from './api';
 import './studentdashboard.css';
 
 const StudentDashboard = () => {
@@ -11,7 +11,7 @@ const StudentDashboard = () => {
 
   const fetchRequests = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/students/status/${encodeURIComponent(email)}`);
+      const res = await API.get(`/students/status/${encodeURIComponent(email)}`);
       setRequests(res.data);
     } catch (err) {
       setRequests([]);

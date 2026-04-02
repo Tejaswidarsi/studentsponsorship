@@ -1,4 +1,4 @@
-import axios from 'axios';
+import API from './api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './studentdashboard.css'; // make sure this CSS file exists
@@ -27,7 +27,7 @@ const LoginPage = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/accounts/login', {
+      const res = await API.post('/accounts/login', {
         email: formData.email,
         password: formData.password,
       });

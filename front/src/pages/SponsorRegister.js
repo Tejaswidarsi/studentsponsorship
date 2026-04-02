@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from './api';
 import './student.css';
 
 const SponsorRegister = () => {
@@ -21,7 +21,7 @@ const SponsorRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/sponsor/register', formData);
+      await API.post('/sponsor/register', formData);
       localStorage.setItem('studentEmail', formData.email);
       if (formData.password.length < 8) {
   setError("Password must be at least 8 characters");

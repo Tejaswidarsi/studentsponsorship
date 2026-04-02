@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import API from './api';
 import { useNavigate } from 'react-router-dom';
 
 const AdminRegister = () => {
@@ -16,10 +16,11 @@ const AdminRegister = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/register', {
+      const res = await await API.post('/admin/register', {
         email,
         password
       });
+      
       setMessage(res.data.message);
       setTimeout(() => navigate('/admin-login'), 2000);
     } catch (err) {

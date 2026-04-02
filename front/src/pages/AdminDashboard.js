@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
+import API from './api';
 const AdminDashboard = () => {
   const [requests, setRequests] = useState([]);
 
   const fetchAllRequests = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/all-requests');
+      const res = await API.get('/admin/all-requests');
       setRequests(res.data);
     } catch (err) {
       console.error('Error fetching requests:', err);
@@ -21,7 +20,7 @@ const AdminDashboard = () => {
 
   const approveRequest = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/approve/${id}`);
+      await API.put(`/admin/approve/${id}`);
       await fetchAllRequests(); // Refetch to update UI
     } catch (err) {
       console.error('Error approving request:', err);
@@ -30,7 +29,7 @@ const AdminDashboard = () => {
 
   const rejectRequest = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/reject/${id}`);
+      await API.put(`/admin/reject/${id}`);
       await fetchAllRequests(); // Refetch to update UI
     } catch (err) {
       console.error('Error rejecting request:', err);

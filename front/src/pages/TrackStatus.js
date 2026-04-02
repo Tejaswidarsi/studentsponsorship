@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import API from './api';
 import { useNavigate, useParams } from 'react-router-dom';
 import './TrackStatus.css';
 
@@ -14,7 +14,7 @@ const TrackStatus = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/students/status/request/${requestId}`);
+        const res = await API.get(`/students/status/request/${requestId}`);
         setStatusData(res.data);
         setError('');
       } catch (err) {

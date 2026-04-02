@@ -1,4 +1,4 @@
-import axios from 'axios';
+import API from './api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './studentdashboard.css'; // Keep your styling
@@ -28,7 +28,7 @@ const SponsorLogin = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/sponsor/login', {
+      const res = await API.post('/sponsor/login', {
         email: formData.email,
         password: formData.password,
       });

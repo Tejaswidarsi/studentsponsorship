@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './student.css';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from './api';
 
 const ApplyForm = () => {
   const [formData, setFormData] = useState({
@@ -45,7 +45,7 @@ const ApplyForm = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/students/apply', data, {
+      const res = await API.post('/students/apply', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
