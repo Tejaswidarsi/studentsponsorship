@@ -54,7 +54,7 @@ try {
 // Middleware
 app.use(cors());
 app.use(express.json());
-const cors = require('cors');
+
 
 app.use(cors({
   origin: 'https://studentsponsorship-web.onrender.com/', // Replace with your ACTUAL Render frontend URL
