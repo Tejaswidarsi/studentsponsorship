@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import API from './api';
+import API from '../api';
 import './studentdashboard.css';
 
 const StudentDashboard = () => {
