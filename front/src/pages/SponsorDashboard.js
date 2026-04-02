@@ -9,8 +9,8 @@ function SponsorDashboard() {
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   const razorpayid = "rzp_test_S1dfMgxP3oaO8y";
   // Fetch student data
-  const API_BASE_URL = "https://studentsponsorship-backend.onrender.com/api/sponsor";
-  const UPLOAD_BASE_URL = "https://studentsponsorship-backend.onrender.com/uploads";
+  const API_BASE_URL = "https://studentsponsorship.onrender.com/api/sponsor";
+  const UPLOAD_BASE_URL = "https://studentsponsorship.onrender.com/uploads";
 // Example call:
   
   const fetchStudents = async () => {
