@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import API from '../api';
 import './student.css';
 
@@ -38,6 +38,12 @@ const SponsorRegister = () => {
 
   };
     return (
+      <>
+      <div style={{ padding: '20px' }}>
+              <Link to="/" style={{ textDecoration: 'none', color: '#2563eb' }}>
+                ← Back to Home Page
+              </Link>
+            </div>
    <div className="register-container">
   <h2 className="register-title">Sponsor Register</h2>
   <form onSubmit={handleSubmit} className="register-form">
@@ -77,7 +83,7 @@ const SponsorRegister = () => {
     </span>
   </p>
 </div>
-
+</>
   );
 };
 export default SponsorRegister;

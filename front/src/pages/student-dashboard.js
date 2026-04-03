@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
 import './studentdashboard.css';
+import logoutIcon from '../images/logout.png';
 
 const StudentDashboard = () => {
   const [requests, setRequests] = useState([]);
@@ -54,7 +55,7 @@ const StudentDashboard = () => {
             Finance Request
           </button>
           <button onClick={handleLogout} className="logout-icon-button" title="Logout">
-            <img src="/image/logout.png" alt="Logout" />
+            <img src={logoutIcon} alt="Logout" />
           </button>
         </div>
       </div>
