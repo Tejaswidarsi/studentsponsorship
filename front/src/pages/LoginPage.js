@@ -1,6 +1,6 @@
 import API from '../api';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,Link } from 'react-router-dom';
 import './studentdashboard.css'; // make sure this CSS file exists
 
 const LoginPage = () => {
@@ -70,9 +70,16 @@ const LoginPage = () => {
         <button type="submit" className="login-button">
           Login
         </button>
+        <div className="register-footer">
+                    Don't have an account?{' '}
+                    <Link to="/register" className="register-link">
+                      Register
+                    </Link>
+                  </div>
       </form>
       {error && <p className="login-error">{error}</p>}
     </div>
+    
   );
 };
 
