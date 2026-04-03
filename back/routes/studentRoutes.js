@@ -79,15 +79,27 @@ router.get('/status', async (req, res) => {
   }
 });
 
-router.get('/status/:email', async (req, res) => {
+// GET a single request by its ID (for the Track Status page)
+router.get('/status/request/:requestId', async (req, res) => {
   try {
-    const studentRequests = await Student.find({ email: req.params.email });
-    // Send 200 even if empty, so the frontend doesn't crash
-    res.status(200).json(studentRequests || []); 
+    const { requestId } = req.params;
+    
+    // Find the specific application by its MongoDB _id
+    const request = await Student.findById(requestId);
+
+    if (!request) {
+      return res.status(404).json({ message: 'Request not found' });
+    }
+
+    res.status(200).json(request);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Error fetching request by ID:", err);
+    // If the ID is not a valid MongoDB ObjectId, it throws a CastError
+    res.status(500).json({ error: "Invalid Request ID or Server Error" });
   }
 });
+
+
 // PUT /api/sponsor/student/:id/pay
 
 

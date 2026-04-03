@@ -161,7 +161,7 @@ const razorpay_amount = response.data.amount;
                       onContextMenu={(e) => e.preventDefault()}
                       style={{ maxWidth: '100%', marginTop: '5px' }}
                     >
-                      <source src={`${UPLOAD_BASE_URL}/${student.photoUrl}`} type="video/mp4" />
+                      <source src={`${UPLOAD_BASE_URL}/${student.videoUrl}`} type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
                   </div>

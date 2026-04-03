@@ -1,6 +1,6 @@
 import API from '../api';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import './studentdashboard.css'; // Keep your styling
 
 const SponsorLogin = () => {
@@ -81,6 +81,12 @@ const SponsorLogin = () => {
         <button type="submit" className="login-button1">
           Login
         </button>
+        <div className="register-footer">
+                            Don't have an account?{' '}
+                            <Link to="/sponsor-register" className="register-link">
+                              Register
+                            </Link>
+                          </div>
       </form>
       {success && <p className="login-success">{success}</p>}
       {error && <p className="login-error">{error}</p>}
