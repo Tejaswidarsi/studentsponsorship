@@ -56,16 +56,26 @@ router.post('/apply', upload.fields([
   }
 });
 
-router.get('/status/:email', async (req, res) => {
-  console.log('Route hit with email:', req.params.email);
+// GET /api/students/status?email=user@example.com
+router.get('/status', async (req, res) => {
   try {
-    const studentRequests = await Student.find({ email: req.params.email });
-    if (!studentRequests || studentRequests.length === 0) {
-      return res.status(404).json({ message: 'Student not found' });
+    const { email } = req.query; // Extract email from the URL query string
+
+    if (!email) {
+      return res.status(400).json({ message: "Email query parameter is required" });
     }
-    res.json(studentRequests);
+
+    console.log(`Searching database for requests from: ${email}`);
+
+    // This line filters MongoDB to find ONLY the documents matching this email
+    const studentRequests = await Student.find({ email: email });
+
+    // Return the specific requests (or an empty array [] if none exist)
+    res.status(200).json(studentRequests);
+    
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error("Database error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
