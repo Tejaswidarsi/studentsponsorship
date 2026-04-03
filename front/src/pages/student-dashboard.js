@@ -32,9 +32,7 @@ const StudentDashboard = () => {
     }
   }, [email, navigate]);
 
-  const handleTrack = () => {
-    navigate('/track');
-  };
+  
 
   const handleLogout = () => {
     localStorage.removeItem('token');

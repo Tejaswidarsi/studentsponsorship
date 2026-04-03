@@ -4,7 +4,7 @@ const Admin = require('../models/Admin');
 const Student = require('../models/student'); // Changed to match model name
 const bcrypt = require('bcrypt');
 
-const BASE_URL = 'http://localhost:5000/uploads';
+const BASE_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
