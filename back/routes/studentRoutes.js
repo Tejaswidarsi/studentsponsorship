@@ -69,14 +69,11 @@ router.get('/status/:email', async (req, res) => {
   }
 });
 
-router.get('/status/request/:id', async (req, res) => {
-  console.log('Route hit with request id:', req.params.id);
+router.get('/status/:email', async (req, res) => {
   try {
-    const request = await Student.findById(req.params.id);
-    if (!request) {
-      return res.status(404).json({ message: 'Request not found' });
-    }
-    res.json(request);
+    const studentRequests = await Student.find({ email: req.params.email });
+    // Send 200 even if empty, so the frontend doesn't crash
+    res.status(200).json(studentRequests || []); 
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
