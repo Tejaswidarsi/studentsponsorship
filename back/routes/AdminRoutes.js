@@ -9,22 +9,21 @@ const BASE_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
   try {
-    // 1. Check if admin exists
     const existingAdmin = await Admin.findOne({ email });
     if (existingAdmin) {
       return res.status(400).json({ message: 'Admin already exists' });
     }
 
-    // 2. Just create the object. 
-    // DO NOT hash here because your Schema Hook handles it!
     const newAdmin = new Admin({ email, password });
-    
-    // 3. Save (This triggers the .pre('save') in your model)
     await newAdmin.save();
     
     res.status(201).json({ message: 'Admin registered successfully' });
   } catch (err) {
-    console.error("Mongoose Save Error:", err.message);
+    // Look at your Render Dashboard "Logs" to see this output:
+    console.error("--- REGISTRATION FAILED ---");
+    console.error("Error Name:", err.name);
+    console.error("Error Message:", err.message);
+    
     res.status(500).json({ error: err.message });
   }
 });
