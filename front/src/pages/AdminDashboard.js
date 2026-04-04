@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import API from '../api';
+import './studentdashboard.css';
+import logoutIcon from '../images/logout.png';
 const AdminDashboard = () => {
   const [requests, setRequests] = useState([]);
-
+  const navigate = useNavigate();
   const fetchAllRequests = async () => {
     try {
       const res = await API.get('/admin/all-requests');
@@ -35,10 +38,16 @@ const AdminDashboard = () => {
       console.error('Error rejecting request:', err);
     }
   };
-
+ const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/admin-login');
+  };
   return (
     <div style={{ padding: '20px' }}>
       <h2>Admin Dashboard</h2>
+      <button onClick={handleLogout} className="logout-icon-button" title="Logout">
+                  <img src={logoutIcon} alt="Logout" />
+                </button>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {requests.map((req) => (
           <div

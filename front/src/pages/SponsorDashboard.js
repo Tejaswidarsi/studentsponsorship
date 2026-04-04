@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './sponsor.css';
-
+import logoutIcon from '../images/logout.png';
 function SponsorDashboard() {
+  const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [paymentInputs, setPaymentInputs] = useState({});
   const [sponsorEmail, setSponsorEmail] = useState('test@example.com');
@@ -126,12 +128,19 @@ const razorpay_amount = response.data.amount;
       alert('Failed to create payment order');
     }
   };
-
+ const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('sponsorEmail');
+    
+    navigate('/sponsor-login');
+  };
   return (
     <div className="sponsor-dashboard">
       <div className="sponsor-container">
         <h2 className="sponsor-header">EduBond Sponsor Dashboard</h2>
-
+         <button onClick={handleLogout} className="logout-icon-button" title="Logout">
+                  <img src={logoutIcon} alt="Logout" />
+              </button>
         {students.length === 0 ? (
           <p className="no-students-message">
             <i className="fas fa-check-circle me-2 text-secondary"></i>
