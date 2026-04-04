@@ -46,10 +46,16 @@ router.get('/all-requests', async (req, res) => {
     const requests = await Student.find({});
     const merged = requests.map((reqItem) => ({
       ...reqItem._doc,
-      photoFullPath: reqItem.photoUrl ? `${BASE_URL}/${reqItem.photoUrl}` : '',
-incomeProofFullPath: reqItem.incomeProofUrl ? `${BASE_URL}/${reqItem.incomeProofUrl}` : '',
-videoFullPath: reqItem.videoUrl ? `${BASE_URL}/${reqItem.videoUrl}` : '',
-
+      // FIX: Added /uploads/ between the BASE_URL and the filename
+      photoFullPath: reqItem.photoUrl 
+        ? `${BASE_URL}/uploads/${reqItem.photoUrl}` 
+        : '',
+      incomeProofFullPath: reqItem.incomeProofUrl 
+        ? `${BASE_URL}/uploads/${reqItem.incomeProofUrl}` 
+        : '',
+      videoFullPath: reqItem.videoUrl 
+        ? `${BASE_URL}/uploads/${reqItem.videoUrl}` 
+        : '',
     }));
     res.json(merged);
   } catch (err) {
