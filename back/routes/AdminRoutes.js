@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Admin = require('../models/Admin');
 const Student = require('../models/student'); // Changed to match model name
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const BASE_URL = process.env.BACKEND_URL || 'http://localhost:5000';
 
