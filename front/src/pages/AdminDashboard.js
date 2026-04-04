@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import API from '../api';
-import './studentdashboard.css'; 
+import './studentdashboard.css';
 import logoutIcon from '../images/logout.png';
-
 const AdminDashboard = () => {
   const [requests, setRequests] = useState([]);
   const navigate = useNavigate();
-
   const fetchAllRequests = async () => {
     try {
       const res = await API.get('/admin/all-requests');
@@ -19,14 +17,14 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     fetchAllRequests();
-    const interval = setInterval(fetchAllRequests, 10000);
-    return () => clearInterval(interval);
+    const interval = setInterval(fetchAllRequests, 10000); // Poll every 10 seconds
+    return () => clearInterval(interval); // Cleanup on unmount
   }, []);
 
   const approveRequest = async (id) => {
     try {
       await API.put(`/admin/approve/${id}`);
-      fetchAllRequests();
+      await fetchAllRequests(); // Refetch to update UI
     } catch (err) {
       console.error('Error approving request:', err);
     }
@@ -35,87 +33,125 @@ const AdminDashboard = () => {
   const rejectRequest = async (id) => {
     try {
       await API.put(`/admin/reject/${id}`);
-      fetchAllRequests();
+      await fetchAllRequests(); // Refetch to update UI
     } catch (err) {
       console.error('Error rejecting request:', err);
     }
   };
-
-  const handleLogout = () => {
+ const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/admin-login');
   };
-
   return (
-    <div className="dashboard-wrapper">
-      {/* HEADER SECTION: Pushes title left and logout right */}
-      <header className="dashboard-header">
-        <h2 className="dashboard-title">Admin Dashboard</h2>
-        <button onClick={handleLogout} className="logout-icon-button" title="Logout">
-          <img src={logoutIcon} alt="Logout" className="logout-img" />
-        </button>
-      </header>
-
-      {/* REQUESTS SECTION */}
-      <div className="requests-container">
+    <>
+    <div>
+      <button onClick={handleLogout} className="logout-icon-button" title="Logout">
+                  <img src={logoutIcon} alt="Logout" />
+                </button>
+    </div>
+    <div style={{ padding: '20px' }}>
+      <h2>Admin Dashboard</h2>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
         {requests.map((req) => (
-          <div key={req._id} className="admin-request-card">
-            <div className="card-top-section">
+          <div
+            key={req._id}
+            style={{
+              border: '1px solid #ddd',
+              padding: '16px',
+              width: '350px',
+              borderRadius: '8px',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+              backgroundColor: '#f9f9f9',
+            }}
+          >
+            <div style={{ display: 'flex', gap: '12px', marginBottom: '10px' }}>
               {req.photoFullPath && (
-                <img src={req.photoFullPath} alt="Student" className="admin-student-photo" />
+                <img
+                  src={req.photoFullPath}
+                  alt="Student Photo"
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    objectFit: 'cover',
+                    borderRadius: '50%',
+                    border: '1px solid #ccc',
+                  }}
+                />
               )}
-              <div className="admin-student-meta">
-                <h4>{req.name}</h4>
-                <p><strong>Email:</strong> {req.email}</p>
-                <p><strong>Program:</strong> {req.currentClassOrProgram}</p>
+              <div>
+                <h4 style={{ margin: '0' }}>{req.name}</h4>
+                <p style={{ margin: '2px 0' }}><strong>Email:</strong> {req.email}</p>
+                <p style={{ margin: '2px 0' }}><strong>Current Program:</strong> {req.currentClassOrProgram}</p>
               </div>
             </div>
-
-            <div className="card-details">
-              <p><strong>Education:</strong> {req.educationLevel}</p>
-              <p><strong>Institution:</strong> {req.institutionName}</p>
-              <p><strong>Purpose:</strong> {req.story?.slice(0, 60)}...</p>
-              <p><strong>Required:</strong> ₹{req.requiredAmount}</p>
-            </div>
-
-            <div className="status-badge">
+            <p><strong>Education:</strong> {req.educationLevel}, {req.currentClassOrProgram}</p>
+            <p><strong>Institution:</strong> {req.institutionName}</p>
+            <p><strong>Purpose:</strong> {req.story?.slice(0, 60)}...</p>
+            <p><strong>Required Amount:</strong> ₹{req.requiredAmount}</p>
+            <div style={{ margin: '10px 0' }}>
               <strong>Status:</strong>{' '}
-              <span className={`status-text ${req.statusProgress.toLowerCase()}`}>
+              <span style={{ color: req.statusProgress === 'Approved' ? 'green' : req.statusProgress === 'Rejected' ? 'red' : 'orange' }}>
                 {req.statusProgress}
               </span>
             </div>
-
-            <div className="document-section">
-              <strong>Income Proof:</strong>
+            <div style={{ margin: '10px 0' }}>
+              <strong>Income Proof:</strong><br />
               {req.incomeProofFullPath ? (
-                <a href={req.incomeProofFullPath} target="_blank" rel="noopener noreferrer" className="view-doc-link">
-                  View Document
+                <a
+                  href={req.incomeProofFullPath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    color: '#2563eb',
+                    fontWeight: 'bold',
+                    textDecoration: 'underline',
+                    display: 'inline-block',
+                    marginTop: '5px',
+                  }}
+                >
+                  View Income Proof
                 </a>
               ) : (
-                <span className="no-doc-text">No document uploaded</span>
+                <span style={{ color: 'red' }}>No document uploaded</span>
               )}
             </div>
-
-            <div className="admin-actions">
+            <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
               <button
                 onClick={() => approveRequest(req._id)}
                 disabled={['Approved', 'Partially Funded', 'Completed', 'Rejected'].includes(req.statusProgress)}
-                className="btn-approve"
+                style={{
+                  flex: 1,
+                  padding: '10px',
+                  backgroundColor: ['Approved', 'Partially Funded', 'Completed', 'Rejected'].includes(req.statusProgress) ? '#ccc' : '#2563eb',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: ['Approved', 'Partially Funded', 'Completed', 'Rejected'].includes(req.statusProgress) ? 'not-allowed' : 'pointer',
+                }}
               >
-                {req.statusProgress === 'Approved' ? 'Approved' : 'Approve'}
+                {req.statusProgress === 'Approved' ? 'Approved' : 'Approve Request'}
               </button>
               <button
                 onClick={() => rejectRequest(req._id)}
                 disabled={['Approved', 'Partially Funded', 'Completed', 'Rejected'].includes(req.statusProgress)}
-                className="btn-reject"
+                style={{
+                  flex: 1,
+                  padding: '10px',
+                  backgroundColor: ['Approved', 'Partially Funded', 'Completed', 'Rejected'].includes(req.statusProgress) ? '#ccc' : '#dc2626',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: ['Approved', 'Partially Funded', 'Completed', 'Rejected'].includes(req.statusProgress) ? 'not-allowed' : 'pointer',
+                }}
               >
-                {req.statusProgress === 'Rejected' ? 'Rejected' : 'Reject'}
+                {req.statusProgress === 'Rejected' ? 'Rejected' : 'Reject Request'}
               </button>
             </div>
           </div>
         ))}
       </div>
     </div>
+    </>
   );
 };
 
