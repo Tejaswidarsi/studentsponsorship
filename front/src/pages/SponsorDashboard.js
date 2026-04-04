@@ -9,7 +9,7 @@ function SponsorDashboard() {
   const [paymentInputs, setPaymentInputs] = useState({});
   const [sponsorEmail, setSponsorEmail] = useState('test@example.com');
   const [razorpayLoaded, setRazorpayLoaded] = useState(false);
-  const razorpayid = "rzp_test_S1dfMgxP3oaO8y";
+  const razorpayid = "rzp_test_SZKIeUtSVH1qt4";
   // Fetch student data
   const API_BASE_URL = "https://studentsponsorship.onrender.com/api/sponsor";
   const UPLOAD_BASE_URL = "https://studentsponsorship.onrender.com/uploads";
@@ -136,11 +136,13 @@ const razorpay_amount = response.data.amount;
   };
   return (
     <div className="sponsor-dashboard">
-      <div className="sponsor-container">
-        <h2 className="sponsor-header">EduBond Sponsor Dashboard</h2>
-         <button onClick={handleLogout} className="logout-icon-button" title="Logout">
+      <button onClick={handleLogout} className="logout-icon-button" title="Logout">
                   <img src={logoutIcon} alt="Logout" />
               </button>
+
+      <div className="sponsor-container">
+        <h2 className="sponsor-header">EduBond Sponsor Dashboard</h2>
+
         {students.length === 0 ? (
           <p className="no-students-message">
             <i className="fas fa-check-circle me-2 text-secondary"></i>

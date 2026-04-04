@@ -252,6 +252,7 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.2s ease;
+  
 }
 .refund-input-field:focus {
   outline: none;
